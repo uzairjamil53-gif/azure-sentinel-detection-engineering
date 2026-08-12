@@ -35,6 +35,10 @@ NSG rules with `access == Allow`, `direction == Inbound`, and `sourceAddressPref
 secrets). This is the data DET-002 could not reach, brought into the workspace where a scheduled
 rule can join it.
 
+The hourly cron is currently commented out and the Action is manual-dispatch only, because the lab
+workspace is parked and the watchlist write returns `AuthorizationFailed`. See
+[Current state](../docs/04-validation.md#current-state).
+
 ## Detection logic
 
 ```kql

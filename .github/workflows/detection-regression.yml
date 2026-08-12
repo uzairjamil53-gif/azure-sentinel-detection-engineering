@@ -1,11 +1,16 @@
 name: detection-regression
 
 # Proves the deployed rules still fire: trigger atomic-aligned actions, assert
-# matching incidents appear, clean up. Weekly + on-demand.
+# matching incidents appear, clean up.
+#
+# On-demand only while the workspace is parked. The weekly cron ("0 6 * * 1",
+# Mondays 06:00 UTC) is commented out below: with Sentinel off the run cannot
+# reach the incidents API and every scheduled run fails. Restore the cron once
+# the workspace is back.
 
 on:
-  schedule:
-    - cron: "0 6 * * 1"   # Mondays 06:00 UTC
+  # schedule:
+  #   - cron: "0 6 * * 1"   # Mondays 06:00 UTC
   workflow_dispatch:
 
 permissions:

@@ -26,10 +26,23 @@ then cleans up the resources it creates.
 
 **Least privilege by design.** Automated regression covers only the detections whose triggers need **Contributor on the workspace resource group**, `DET-002 (NSG)` and `DET-004 (mass deletion)`. The CI identity therefore needs **no role-assignment (User Access Administrator) and no subscription-scope rights**. `DET-003 (RBAC)`, `DET-001 (failed-ops)` and `DET-005 (non-owner)` would require a more privileged or second identity, so they are validated **manually** via the trigger-playbook rather than handing the pipeline standing privilege it doesn't need.
 
-[`.github/workflows/detection-regression.yml`](../.github/workflows/detection-regression.yml) runs it on a weekly schedule and on manual dispatch (OIDC, read+contributor on `sc200-lab`), and logs exactly what it asserted and any miss, no silent pass.
+[`.github/workflows/detection-regression.yml`](../.github/workflows/detection-regression.yml) runs it on a weekly schedule and on manual dispatch (OIDC, read+contributor on `sc200-lab`), and logs exactly what it asserted and any miss, no silent pass. The weekly cron is currently commented out and the workflow is manual-dispatch only while the workspace is parked, see [Current state](#current-state) below.
 
 ### Run locally
 ```bash
 az login
 python cicd/regression-test.py            # triggers, asserts, cleans up
 ```
+
+## Current state
+
+The lab workspace is parked to keep it at zero standing cost, so Microsoft Sentinel is no
+longer active on `sc200-ws`. Two consequences for the scheduled automation:
+
+- `detection-regression` cannot reach the incidents API, so its weekly cron is commented out.
+- `nsg-posture-watchlist` gets `AuthorizationFailed` on
+  `Microsoft.SecurityInsights/watchlists/write`, so its hourly cron is commented out.
+
+Both keep `workflow_dispatch`, and `detection-tests` still runs on every pull request because it
+uses a local Kusto emulator and needs no tenant. Re-enable the two crons when the workspace and
+the Sentinel role assignments come back.

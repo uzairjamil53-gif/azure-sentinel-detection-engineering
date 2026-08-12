@@ -3,10 +3,15 @@ name: nsg-posture-watchlist
 # Refreshes the soc-open-mgmt-nsg-rules Sentinel watchlist from Azure Resource Graph: the NSGs
 # that currently expose inbound Allow-from-Any. DET-009 joins this content to the AzureActivity
 # change event to flag a change that actually opened the NSG. OIDC, no stored secrets.
+#
+# On-demand only while the workspace is parked. The hourly cron ("17 * * * *")
+# is commented out below: with Sentinel off the watchlist PUT returns
+# AuthorizationFailed on Microsoft.SecurityInsights/watchlists/write, so every
+# scheduled run fails. Restore the cron once the workspace is back.
 
 on:
-  schedule:
-    - cron: "17 * * * *"   # hourly, offset to avoid the top-of-hour rush
+  # schedule:
+  #   - cron: "17 * * * *"   # hourly, offset to avoid the top-of-hour rush
   workflow_dispatch:
 
 permissions:
