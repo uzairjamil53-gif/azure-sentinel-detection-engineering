@@ -1,8 +1,9 @@
 {
-  "_comment": "DET-003 v2: fires on a successful roleAssignments write by a non-automation caller; silent for an allow-listed automation/PIM principal, a non-roleAssignments op, or a failure. watchlist = soc-automation-principals SearchKey values (example principal, no real identity).",
+  "_comment": "DET-003 v2: fires on successful roleAssignments write/delete operations by a non-automation caller; silent for an allow-listed automation/PIM principal, a non-roleAssignments op, or a failure. watchlist = soc-automation-principals SearchKey values (example principal, no real identity).",
   "watchlist": ["automation-sp@example.com"],
   "fires": [
-    {"ActivityStatusValue": "Success", "Caller": "attacker@contoso.com", "OperationNameValue": "Microsoft.Authorization/roleAssignments/write", "ResourceProviderValue": "Microsoft.Authorization", "ResourceId": "/subscriptions/x/providers/Microsoft.Authorization/roleAssignments/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee", "Properties_d": {"eventCategory": "Administrative"}}
+    {"ActivityStatusValue": "Success", "Caller": "attacker@contoso.com", "OperationNameValue": "Microsoft.Authorization/roleAssignments/write", "ResourceProviderValue": "Microsoft.Authorization", "ResourceId": "/subscriptions/x/providers/Microsoft.Authorization/roleAssignments/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee", "Properties_d": {"eventCategory": "Administrative"}},
+    {"ActivityStatusValue": "Success", "Caller": "attacker@contoso.com", "OperationNameValue": "Microsoft.Authorization/roleAssignments/delete", "ResourceProviderValue": "Microsoft.Authorization", "ResourceId": "/subscriptions/x/providers/Microsoft.Authorization/roleAssignments/bbbbbbbb-cccc-dddd-eeee-ffffffffffff", "Properties_d": {"eventCategory": "Administrative"}}
   ],
   "silent": [
     {"ActivityStatusValue": "Success", "Caller": "automation-sp@example.com", "OperationNameValue": "Microsoft.Authorization/roleAssignments/write", "ResourceProviderValue": "Microsoft.Authorization", "ResourceId": "/subscriptions/x/providers/Microsoft.Authorization/roleAssignments/11111111-2222-3333-4444-555555555555", "Properties_d": {"eventCategory": "Administrative"}},
