@@ -2,7 +2,9 @@
   "_comment": "DET-005 v2: fires on a non-owner successful write to a watched provider (Compute/Storage/Web); silent for an allow-listed owner, a non-watched provider, a read, or a failure. watchlist = soc-deploy-owners SearchKey values (example owner, no real identity).",
   "watchlist": ["deploy-owner@example.com"],
   "fires": [
-    {"ActivityStatusValue": "Success", "Caller": "attacker@contoso.com", "OperationNameValue": "Microsoft.Storage/storageAccounts/write", "ResourceProviderValue": "Microsoft.Storage", "ResourceId": "/subscriptions/x/rg/a/providers/Microsoft.Storage/storageAccounts/stg1"}
+    {"ActivityStatusValue": "Success", "Caller": "attacker@contoso.com", "OperationNameValue": "Microsoft.Compute/virtualMachines/write", "ResourceProviderValue": "Microsoft.Compute", "ResourceId": "/subscriptions/x/rg/a/providers/Microsoft.Compute/virtualMachines/vm1"},
+    {"ActivityStatusValue": "Success", "Caller": "attacker@contoso.com", "OperationNameValue": "Microsoft.Storage/storageAccounts/write", "ResourceProviderValue": "Microsoft.Storage", "ResourceId": "/subscriptions/x/rg/a/providers/Microsoft.Storage/storageAccounts/stg1"},
+    {"ActivityStatusValue": "Success", "Caller": "attacker@contoso.com", "OperationNameValue": "Microsoft.Web/sites/write", "ResourceProviderValue": "Microsoft.Web", "ResourceId": "/subscriptions/x/rg/a/providers/Microsoft.Web/sites/webapp1"}
   ],
   "silent": [
     {"ActivityStatusValue": "Success", "Caller": "deploy-owner@example.com", "OperationNameValue": "Microsoft.Storage/storageAccounts/write", "ResourceProviderValue": "Microsoft.Storage", "ResourceId": "/subscriptions/x/rg/a/providers/Microsoft.Storage/storageAccounts/stg-owner"},
